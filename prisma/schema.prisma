@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql" // Or another provider like "mysql" or "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,42 +8,37 @@ generator client {
 }
 
 model Quiz {
-  id          String     @id @default(cuid()) // Unique identifier for each quiz
-  title       String // Title of the quiz
-  description String? // Optional description of the quiz
-  questions   Question[] @relation("QuizQuestions") // Relation to questions in the quiz
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  questions   Question[] @relation("QuizQuestions")
 }
 
 model Question {
-  id      String   @id @default(cuid()) // Unique identifier for each question
+  id      String   @id @default(cuid())
   quizId  String
-  text    String // Text content of the question
-  quiz    Quiz     @relation("QuizQuestions", fields: [quizId], references: [id]) // Relation to the associated quiz
-  answers Answer[] @relation("QuestionAnswers") // Relation to possible answers for this question
+  text    String
+  quiz    Quiz     @relation("QuizQuestions", fields: [quizId], references: [id])
+  answers Answer[] @relation("QuestionAnswers")
 }
 
 model Answer {
-  id         String   @id @default(cuid()) // Unique identifier for each answer
-  text       String // Text content of the answer
-  isCorrect  Boolean  @default(false) // Boolean indicating if this is the correct answer
-  question   Question @relation("QuestionAnswers", fields: [questionId], references: [id]) // Relation to the associated question
-  questionId String // Foreign key for Question
+  id         String   @id @default(cuid())
+  text       String
+  isCorrect  Boolean  @default(false)
+  question   Question @relation("QuestionAnswers", fields: [questionId], references: [id])
+  questionId String
 }
 
 model User {
-  id         String  @id @default(cuid()) // Unique identifier for each user
-  externalId String  @unique
-  firstName  String? // Optional name for the user
+  id         String   @id @default(cuid())
+  externalId String   @unique
+  firstName  String?
   lastName   String?
-  email      String  @unique // Unique email address for each user
-
-  role Role @default(USER) // Boolean indicating if the user is an admin
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // password String   // Password for the user
-
-  // quizzes  Quiz[]   @relation("UserQuizzes") // Relation to quizzes created by the user
+  email      String   @unique
+  role       Role     @default(USER)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 enum Role {
