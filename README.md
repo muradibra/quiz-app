@@ -35,6 +35,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+ngrok http --domain=goose-capable-liger.ngrok-free.app 3000
+
 .env variables
 DATABASE_URL="postgresql://neondb_owner:Gki65hzvxCET@ep-round-cake-a4c6y51j-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
 
